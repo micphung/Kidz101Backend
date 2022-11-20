@@ -34,6 +34,9 @@ public class Product {
 	@Column(name = "quantity")
 	private int quantity;
 	
+	@Column(name = "sId")
+	private String sId;
+	
 	
 	// default constructor needed bc of hibernate creating prxys 
 	public Product(){
@@ -42,13 +45,14 @@ public class Product {
 	
 	
 	
-	public Product(String pName, String department, String imageUrl, int price, int quantity) {
+	public Product(String pName, String department, String imageUrl, int price, int quantity, String sId) {
 		super();
 		this.pName = pName;
 		this.department = department;
 		this.imageUrl = imageUrl;
 		this.price = price;
 		this.quantity = quantity;
+		this.sId= sId;
 	}
 	public long  getId() {
 		return id;
@@ -85,6 +89,18 @@ public class Product {
 	}
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+
+
+
+	public String getsId() {
+		return sId;
+	}
+
+
+
+	public void setsId(String sId) {
+		this.sId = sId;
 	} 
 
 }

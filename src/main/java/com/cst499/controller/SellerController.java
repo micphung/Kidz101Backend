@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cst499.exception.ResourceNotFoundException;
+import com.cst499.model.Product;
 import com.cst499.model.Seller;
 import com.cst499.repository.SellerRepository;
 //
@@ -48,11 +49,44 @@ public class SellerController {
 		return sellerRepository.save(seller);
 	}
 	
-	// get product by id rest api
-	@GetMapping("/sellers/{id}")
-	public ResponseEntity<Seller> getSellerById(@PathVariable Long id) {
-		Seller seller = sellerRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Seller does not exist with this id :" + id));
-		return ResponseEntity.ok(seller);
-	}
+	// get seller by id rest api
+		@GetMapping("/sellers/{id}")
+		public ResponseEntity<Seller> getSellertById(@PathVariable Long id) {
+			Seller seller = sellerRepository.findById(id)
+					.orElseThrow(() -> new ResourceNotFoundException("Seller does not exist with this id :" + id));
+			return ResponseEntity.ok(seller);
+		}
+	//	
+//		// update seller rest api
+	//	
+		@PutMapping("/sellers/{sellerId}")
+		public ResponseEntity<Seller> updateSeller(@PathVariable Long sellerId, @RequestBody Seller sellerDetails){
+			Seller seller = sellerRepository.findById(sellerId)
+					.orElseThrow(() -> new ResourceNotFoundException("Seller does not exist with id :" + sellerId));
+			
+			seller.setSellerId(sellerDetails.getSellerId());
+			//seller.setsLastName(sellerDetails.getsLastName());
+			//seller.setEmail(sellerDetails.getEmail());
+			//seller.setProducts(sellerDetails.getProducts());
+			//seller.setsFirstName(sellerDetails.getsFirstName());
+			seller.setPassword(sellerDetails.getPassword());
+			seller.setsId(sellerDetails.getsId());
+
+			
+			
+			Seller updatedSeller = sellerRepository.save(seller);
+			return ResponseEntity.ok(updatedSeller);
+		}
+	//	
+//		// delete seller rest api
+		@DeleteMapping("/sellers/{sellerId}")
+		public ResponseEntity<Map<String, Boolean>> deleteSeller(@PathVariable Long sellerId){
+			Seller seller = sellerRepository.findById(sellerId)
+					.orElseThrow(() -> new ResourceNotFoundException("Product does not exist with this id :" + sellerId));
+			
+			sellerRepository.delete(seller);
+			Map<String, Boolean> response = new HashMap<>();
+			response.put("deleted", Boolean.TRUE);
+			return ResponseEntity.ok(response);
+		}
 }
