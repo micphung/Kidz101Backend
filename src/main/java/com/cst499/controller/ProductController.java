@@ -56,13 +56,7 @@ public class ProductController {
 		return productRepository.save(product);
 	}
 //	
-//	// get product by id rest api
-	@GetMapping("/products/{productId}")
-	public ResponseEntity<Product> getProductById(@PathVariable Long productId) {
-		Product product = productRepository.findById(productId)
-				.orElseThrow(() -> new ResourceNotFoundException("Product does not exist with this id :" + productId));
-		return ResponseEntity.ok(product);
-	}
+
 //	
 //	// update employee rest api
 //	
@@ -94,23 +88,11 @@ public class ProductController {
 		return ResponseEntity.ok(response);
 	}
 	
-//	//getProductsBySellerId
-//	@GetMapping("/products/{sId}")
-//	public ResponseEntity<List<Product>> getProductBySellerId(@RequestParam long sId){
-//	//(@PathVariable long sId) {
-//		//@RequestParam("sId") long sId
-//		//Long sellerId = seller.getSellerId();
-//		System.out.println(sId);
-//		List<Product> product = (List<Product>) productRepository.findProductBySellerId(sId);
-////				.orElseThrow(() -> new ResourceNotFoundException("Product does not exist with this sellerId :" + sId));
-//		return ResponseEntity.ok(product);
-//	}
-	
-	// @RequestParam("year") int year
+
 	
 	@GetMapping("/products/searchsId")
-	public ResponseEntity<List<Product>> searchsIdProductsByQuery(@RequestParam("query") String query){
-	List<Product> products = productRepository.searchsIdByQuery(query);
+	public ResponseEntity<List<Product>> searchsIdProductsByQuery(@RequestParam("sId") String sId){
+	List<Product> products = productRepository.searchsIdByQuery(sId);
 	return ResponseEntity.ok(products);
 	}
 	
@@ -120,7 +102,13 @@ public class ProductController {
 	return ResponseEntity.ok(products);
 	}
 //	
-	
+//	// get product by id rest api
+	@GetMapping("/products/{productId}")
+	public ResponseEntity<Product> getProductById(@PathVariable Long productId) {
+		Product product = productRepository.findById(productId)
+				.orElseThrow(() -> new ResourceNotFoundException("Product does not exist with this id :" + productId));
+		return ResponseEntity.ok(product);
+	}
 	
 //}
 }

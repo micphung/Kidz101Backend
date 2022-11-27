@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cst499.exception.ResourceNotFoundException;
@@ -82,11 +83,41 @@ public class SellerController {
 		@DeleteMapping("/sellers/{sellerId}")
 		public ResponseEntity<Map<String, Boolean>> deleteSeller(@PathVariable Long sellerId){
 			Seller seller = sellerRepository.findById(sellerId)
-					.orElseThrow(() -> new ResourceNotFoundException("Product does not exist with this id :" + sellerId));
+					.orElseThrow(() -> new ResourceNotFoundException("Seller does not exist with this id :" + sellerId));
 			
 			sellerRepository.delete(seller);
 			Map<String, Boolean> response = new HashMap<>();
 			response.put("deleted", Boolean.TRUE);
 			return ResponseEntity.ok(response);
 		}
+//		//update seller by sid
+		@GetMapping("/sellers/searchsId")
+		public ResponseEntity<Seller> searchSellersId(@RequestParam("query") String query){
+			Seller seller = sellerRepository.searchsIdByQuery(query);
+			return ResponseEntity.ok(seller);
+		}
+		
+		//get password by sId
+//		@GetMapping("/sellers/validate")
+//		public ResponseEntity<Seller> searchSellerpassword(@RequestParam("sId") String sId, @RequestParam("password") String password){
+//			Seller seller = sellerRepository.searchsIdByQuery(sId);
+//					
+//			String passwordIS = seller.getPassword();
+//			if(passwordIS == password) {
+//				return ResponseEntity.ok(seller);
+//			}
+//			return null;
+//		
+//		
+//		}
+//		@GetMapping("/products/searchsId")
+//		public ResponseEntity<List<Product>> searchsIdProductsByQuery(@RequestParam("query") String query){
+//		List<Product> products = productRepository.searchsIdByQuery(query);
+//		return ResponseEntity.ok(products);
+//		}
+		
+		
+		
+		
+		
 }

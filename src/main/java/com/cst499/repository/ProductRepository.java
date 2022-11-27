@@ -31,8 +31,8 @@ public interface ProductRepository extends JpaRepository <Product, Long > {
 	// use for filtering keywords
 //	@Query("Select p From Product p WHERE p.pName LIKE CONCAT('%. :query,'%') OR p.sId LIKE CONCAT ('%. :query,'%')")
 	
-	@Query("Select p From Product p WHERE p.sId =:query")
-	List<Product> searchsIdByQuery(String query);
+	@Query("Select p From Product p WHERE p.sId =:sId")
+	List<Product> searchsIdByQuery(String sId);
 	
 	@Query("Select p From Product p WHERE p.pName LIKE CONCAT('%',:query,'%') OR p.pName LIKE CONCAT('%',:query,'%')"+
 	"OR p.department LIKE CONCAT('%',:query,'%')")
