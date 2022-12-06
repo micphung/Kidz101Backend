@@ -51,6 +51,32 @@ public class ConsumerController {
 		return consumerRepository.save(consumer);
 	}
 	
+	@GetMapping("/consumers/searchcId")
+	public ResponseEntity<Consumer> searchConsumersId(@RequestParam("query") String query){
+		Consumer consumer = consumerRepository.searchcIdByQuery(query);
+		return ResponseEntity.ok(consumer);
+	}
+	
+//	@GetMapping("/consumers/validate")
+//	public ResponseEntity<Consumer> validateConsumersId(@RequestParam("cId") String cId, @RequestParam("password") String password){
+//		Consumer consumer = consumerRepository.searchValidate(cId, password);
+//		return ResponseEntity.ok(consumer);
+//	}
+	
+	@GetMapping("/consumers/validate")
+	public boolean validateConsumersId(@RequestParam("cId") String cId, @RequestParam("password") String password){
+		Consumer consumer = consumerRepository.searchcIdByQuery(cId);
+		boolean result = false;
+		if(consumer.getPassword().equals(password)) {
+			System.out.println(consumer);
+
+			result = true;
+		}
+		System.out.println(result);
+		return result;
+		
+	}
+	
 	// get seller by id rest api
 		@GetMapping("/consumers/{consumerId}")
 		public ResponseEntity<Consumer> getConsumertById(@PathVariable Long consumerId) {
@@ -91,10 +117,5 @@ public class ConsumerController {
 			response.put("deleted", Boolean.TRUE);
 			return ResponseEntity.ok(response);
 		}
-//		//update seller by sid
-		@GetMapping("/consumers/searchcId")
-		public ResponseEntity<Consumer> searchConsumersId(@RequestParam("query") String query){
-			Consumer consumer = consumerRepository.searchcIdByQuery(query);
-			return ResponseEntity.ok(consumer);
-		}
+
 }	

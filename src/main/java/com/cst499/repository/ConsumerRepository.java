@@ -22,6 +22,14 @@ public interface ConsumerRepository extends JpaRepository <Consumer, Long > {
 	@Query("Select c From Consumer c WHERE c.cId =:query")
 	Consumer searchcIdByQuery(String query);
 	
+	
+	@Query("Select c From Consumer c WHERE c.password =:password")
+	Consumer searchcIdByPassword(String password);
+	
+	
+	@Query("Select c From Consumer c WHERE c.cId =:cId AND  c.password =:password ")
+	Consumer searchValidate(String cId, String password);
+	
 //	@Query("Select s From Seller s WHERE s.sId =:")
 //	Seller searchPasswordByQuery(String query);
 	

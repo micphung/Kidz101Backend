@@ -13,5 +13,9 @@ public interface CartItemRepository  extends JpaRepository <CartItem, Long >{
 	@Query("Select c From CartItem c WHERE c.cId =:cId")
 	List<CartItem> searchcIdByQuery(String cId);
 	
+	
+	
+	@Query("Select c From CartItem c WHERE c.cId =:cId")
+	CartItem searchcIdByQueryUnit(String cId);
 
 }
